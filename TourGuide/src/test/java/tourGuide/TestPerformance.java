@@ -1,5 +1,6 @@
 package tourGuide;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -44,28 +45,35 @@ public class TestPerformance {
 	 *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	 */
 	
-	@Ignore
 	@Test
 	public void highVolumeTrackLocation() {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(100);
+		InternalTestHelper.setInternalUserNumber(100000);
+		/* The Tracker starts every time the TourGuideService gets created. In the Tracker
+		we invoke the method <<trackUserLocation>> for each user. So, basically, we have to 
+		mesure the running time of Threads inside of Tracker. */
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
 
-		List<User> allUsers = new ArrayList<>();
-		allUsers = tourGuideService.getAllUsers();
-		
-	    StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		for(User user : allUsers) {
-			tourGuideService.trackUserLocation(user);
+		/* It takes around 200 seconds for all the Threads to process 100 000 users.
+		Here we make the test method wait the completion of all Threads in Tracker. 
+		If it takes more than 3.5 minutes to process all the users this test method will fail
+		due to InterruptedException. */
+		try {
+			Thread.sleep(210000); // 3,5 minutes
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		stopWatch.stop();
-		tourGuideService.tracker.stopTracking();
 
-		System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
-		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+		/* By default all the users have 3 visited locations. If the Tracker completed successfully
+		all the users will have +1 visited location (i.e. 4 visited locations). We can check that. */
+		tourGuideService.getAllUsers().forEach(u -> {
+			assertEquals(4, u.getVisitedLocations().size());
+		});
 	}
 	
 	@Ignore
