@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -46,7 +45,7 @@ public class TestRewardsService {
 		assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
 	}
 	
-	@Ignore // Needs fixed - can throw ConcurrentModificationException
+//	@Ignore // Needs fixed - can throw ConcurrentModificationException
 	@Test
 	public void nearAllAttractions() {
 		GpsUtil gpsUtil = new GpsUtil();
@@ -55,11 +54,19 @@ public class TestRewardsService {
 
 		InternalTestHelper.setInternalUserNumber(1);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
+
+		// It takes about 10-12 seconds to process the rewards creation. The test
+		// method has to wait till the processing completes.
+		try {
+			Thread.sleep(15000);
+		} catch (InterruptedException e) {
+		System.out.println("Test interuption");
+			e.printStackTrace();
+		}
 		
-		rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
+		//rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
 		List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));
 		tourGuideService.tracker.stopTracking();
-
 		assertEquals(gpsUtil.getAttractions().size(), userRewards.size());
 	}
 	

@@ -38,9 +38,15 @@ dependencies {
     implementation name:'gpsUtil', ext:'jar'
     implementation name:'RewardCentral', ext:'jar'
     implementation name:'TripPricer', ext:'jar'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
     
     testImplementation "junit:junit"
     testImplementation  group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.6.RELEASE'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 }
 
 

@@ -5,8 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.UUID;
-
-import org.junit.Ignore;
+import java.util.stream.Collectors;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -92,7 +91,6 @@ public class TestTourGuideService {
 		assertEquals(user.getUserId(), visitedLocation.userId);
 	}
 	
-	@Ignore // Not yet implemented
 	@Test
 	public void getNearbyAttractions() {
 		GpsUtil gpsUtil = new GpsUtil();
@@ -102,11 +100,11 @@ public class TestTourGuideService {
 		
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		VisitedLocation visitedLocation = tourGuideService.trackUserLocation(user);
-		
-		List<Attraction> attractions = tourGuideService.getNearByAttractions(visitedLocation);
+		// Getting the list of values out of the map of 5 closest locations.
+		List<Attraction> attractions = tourGuideService.getNearByAttractions(visitedLocation).values().stream().collect(Collectors.toList());
 		
 		tourGuideService.tracker.stopTracking();
-		
+
 		assertEquals(5, attractions.size());
 	}
 	
@@ -124,6 +122,4 @@ public class TestTourGuideService {
 		
 		assertEquals(10, providers.size());
 	}
-	
-	
 }
