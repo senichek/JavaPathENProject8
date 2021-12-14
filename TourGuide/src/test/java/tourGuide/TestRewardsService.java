@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
@@ -19,6 +21,11 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 public class TestRewardsService {
+
+	@BeforeAll
+	public void setup() {
+		Locale.setDefault(Locale.US);
+	}
 
 	@Test
 	public void userGetRewards() {
@@ -64,10 +71,9 @@ public class TestRewardsService {
 			e.printStackTrace();
 		}
 		
-		//rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
+		rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
 		List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));
 		tourGuideService.tracker.stopTracking();
 		assertEquals(gpsUtil.getAttractions().size(), userRewards.size());
 	}
-	
 }

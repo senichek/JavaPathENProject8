@@ -1,24 +1,15 @@
 package tourGuide;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.commons.lang3.time.StopWatch;
+import java.util.Locale;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import gpsUtil.GpsUtil;
-import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
-import tourGuide.user.User;
 
 public class TestPerformance {
 	
@@ -41,27 +32,30 @@ public class TestPerformance {
      *     highVolumeGetRewards: 100,000 users within 20 minutes:
 	 *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	 */
+
+	@BeforeAll
+	public void setup() {
+		Locale.setDefault(Locale.US);
+	}
 	
 	@Test
-	public void highVolumeTrackLocation() {
+	public void highVolumeTrackLocationAndRewardCalculation() {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(1);
+		InternalTestHelper.setInternalUserNumber(100000);
 		/* The Tracker starts every time the TourGuideService gets created. In the Tracker
-		we invoke the method <<trackUserLocation>> for each user. So, basically, we have to 
-		mesure the running time of Threads inside of Tracker. */
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-
+		we invoke the method <<trackUserLocation>> and <<calculateRewards>>for each user. 
+		So, basically, we have to make sure that the Threads completed. */
+		
 		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
 
-		/* It takes around 200 seconds for all the Threads to process 100 000 users.
+		/* It takes around 350-400 seconds for all the Threads to process 100 000 users.
 		Here we make the test method wait the completion of all Threads in Tracker. 
-		If it takes more than 3.5 minutes to process all the users this test method will fail
+		If it takes more than 410 seconds to process all the users this test method will fail
 		due to InterruptedException. */
 		try {
-			Thread.sleep(210000); // 3,5 minutes
+			Thread.sleep(410000); // Tracker runs about 350-400 seconds
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -72,34 +66,4 @@ public class TestPerformance {
 			assertEquals(4, u.getVisitedLocations().size());
 		});
 	}
-	
-	//@Ignore
-	@Test
-	public void highVolumeGetRewards() {
-		GpsUtil gpsUtil = new GpsUtil();
-		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
-
-		// Users should be incremented up to 100,000, and test finishes within 20 minutes
-		InternalTestHelper.setInternalUserNumber(100);
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
-		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
-		
-	    Attraction attraction = gpsUtil.getAttractions().get(0);
-		List<User> allUsers = new ArrayList<>();
-		allUsers = tourGuideService.getAllUsers();
-		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
-	     
-	    allUsers.forEach(u -> rewardsService.calculateRewards(u));
-	    
-		for(User user : allUsers) {
-			assertTrue(user.getUserRewards().size() > 0);
-		}
-		stopWatch.stop();
-		tourGuideService.tracker.stopTracking();
-
-		System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
-		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-	}
-	
 }

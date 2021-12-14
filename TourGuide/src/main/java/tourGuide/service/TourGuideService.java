@@ -2,6 +2,7 @@ package tourGuide.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -37,6 +41,8 @@ public class TourGuideService {
 	public final Tracker tracker;
 	boolean testMode = true;
 
+	ExecutorService executorService = Executors.newFixedThreadPool(100);
+
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
@@ -47,7 +53,8 @@ public class TourGuideService {
 			initializeInternalUsers();
 			logger.debug("Finished initializing users");
 		}
-		tracker = new Tracker(this);
+		//tracker = new Tracker(this);
+		tracker = new Tracker(this, rewardsService);
 		addShutDownHook();
 	}
 
@@ -89,11 +96,27 @@ public class TourGuideService {
 		logger.debug("<<trackUserLocation>> was called for " + user.getUserName());
 		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
 		user.addToVisitedLocations(visitedLocation);
-		rewardsService.calculateRewards(user);
 		return visitedLocation;
 	}
 
-	// https://github.com/davidmoten/rtree
+	public void trackUserLocationMultiThreading(List<User> users, ExecutorService executorService) {
+		List<Callable<VisitedLocation>> tasks = new ArrayList<>();
+		users.forEach(u -> {
+			tasks.add(new Callable<VisitedLocation>() {
+				@Override
+				public VisitedLocation call() throws Exception {
+					return trackUserLocation(u);
+				}
+			});
+		});
+		try {
+			executorService.invokeAll(tasks);
+		} catch (InterruptedException e) {
+			logger.debug("<<executorService.invokeAll>> was interrupted");
+			e.printStackTrace();
+		}
+	}
+
 	public Map<Double, Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		Map<Double, Attraction> fiveClosest = new HashMap<>();
 		for (Attraction attraction : gpsUtil.getAttractions()) {
@@ -116,7 +139,7 @@ public class TourGuideService {
 			}
 		});
 	}
-
+	
 	/**********************************************************************************
 	 * 
 	 * Methods Below: For Internal Testing
