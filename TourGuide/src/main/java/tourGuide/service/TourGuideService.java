@@ -14,9 +14,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
+import tourGuide.helper.Util;
 
 @Service
 public class TourGuideService {
@@ -41,7 +44,7 @@ public class TourGuideService {
 	public final Tracker tracker;
 	boolean testMode = true;
 
-	ExecutorService executorService = Executors.newFixedThreadPool(100);
+	ExecutorService executorService = Executors.newFixedThreadPool(Util.calculateAmountofThreads());
 
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
 		this.gpsUtil = gpsUtil;
@@ -98,8 +101,11 @@ public class TourGuideService {
 		user.addToVisitedLocations(visitedLocation);
 		return visitedLocation;
 	}
-
-	public void trackUserLocationMultiThreading(List<User> users, ExecutorService executorService) {
+// TODO разобраться нужно ли выключить executorService
+	public void trackUserLocationMultiThreading(List<User> users) {
+		StopWatch stopWatch = new StopWatch();
+		logger.debug("STARTED tracking the users' locations.");
+		stopWatch.start();
 		List<Callable<VisitedLocation>> tasks = new ArrayList<>();
 		users.forEach(u -> {
 			tasks.add(new Callable<VisitedLocation>() {
@@ -115,6 +121,9 @@ public class TourGuideService {
 			logger.debug("<<executorService.invokeAll>> was interrupted");
 			e.printStackTrace();
 		}
+		stopWatch.stop();
+		logger.debug("FINISHED tracking the users' locations. " + "Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+		stopWatch.reset();
 	}
 
 	public Map<Double, Attraction> getNearByAttractions(VisitedLocation visitedLocation) {

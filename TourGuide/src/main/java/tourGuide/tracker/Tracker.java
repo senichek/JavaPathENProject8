@@ -19,7 +19,8 @@ public class Tracker extends Thread {
 	private static final long trackingPollingInterval = TimeUnit.MINUTES.toSeconds(5);
 	// My changes
 	// Executors.newSingleThreadExecutor was replaced by Executors.newFixedThreadPool(+ method that calculates the number of Threads we may need);
-	private final ExecutorService executorService = Executors.newFixedThreadPool(Util.calculateAmountofThreads());
+	//private final ExecutorService executorService = Executors.newFixedThreadPool(Util.calculateAmountofThreads());
+	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 	private final TourGuideService tourGuideService;
 	private final RewardsService rewardsService;
 	private boolean stop = false;
@@ -55,8 +56,8 @@ public class Tracker extends Thread {
 			stopWatch.start();
 			// Removed users.forEach(u -> tourGuideService.trackUserLocation(u));
 			// and added lines 58 and 59.
-			tourGuideService.trackUserLocationMultiThreading(users, executorService);
-			rewardsService.calculateRewardsMultiThreading(users, executorService);
+			tourGuideService.trackUserLocationMultiThreading(users);
+			rewardsService.calculateRewardsMultiThreading(users);
 			stopWatch.stop();
 			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
 			stopWatch.reset();

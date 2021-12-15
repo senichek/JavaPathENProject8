@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
@@ -14,14 +16,19 @@ import gpsUtil.location.VisitedLocation;
 import rewardCentral.RewardCentral;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
+
+import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tourGuide.helper.Util;
 
 @Service
 public class RewardsService {
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
 	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
+
+	ExecutorService executorService = Executors.newFixedThreadPool(Util.calculateAmountofThreads());
 
 	// proximity in miles
     private int defaultProximityBuffer = 10;
@@ -59,7 +66,10 @@ public class RewardsService {
 		}
 	}
 
-	public void calculateRewardsMultiThreading(List<User> users, ExecutorService executorService) {
+	public void calculateRewardsMultiThreading(List<User> users) {
+		StopWatch stopWatch = new StopWatch();
+		logger.debug("STARTED calculating rewards.");
+		stopWatch.start();
 		List<Callable<Void>> tasks = new ArrayList<>();
 		users.forEach(u -> {
 			tasks.add(new Callable<Void>() {
@@ -76,6 +86,9 @@ public class RewardsService {
 			logger.debug("<<executorService.invokeAll>> was interrupted");
 			e.printStackTrace();
 		}
+		stopWatch.stop();
+		logger.debug("FINISHED calculating rewards. " + "Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+		stopWatch.reset();
 	}
 
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
