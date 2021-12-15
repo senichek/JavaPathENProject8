@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestRewardsService" tests="3" skipped="0" failures="0" errors="0" timestamp="2021-12-15T20:49:45" hostname="LAPTOP" time="10.49">
+  <properties/>
+  <testcase name="nearAllAttractions" classname="tourGuide.TestRewardsService" time="10.05"/>
+  <testcase name="userGetRewards" classname="tourGuide.TestRewardsService" time="0.418"/>
+  <testcase name="isWithinAttractionProximity" classname="tourGuide.TestRewardsService" time="0.02"/>
+  <system-out><![CDATA[21:49:45.746 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:45.746 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:45.746 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 1 internal test users.
+21:49:45.746 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:45.747 [Test worker] DEBUG tourGuide.service.RewardsService - <<calculateRewards>> was called for internalUser0
+21:49:45.747 [pool-9-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:49:45.907 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:46.069 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:46.785 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:47.089 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:47.301 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:47.427 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:47.462 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:48.050 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:48.433 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:48.966 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:49.393 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:49.757 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:50.344 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:51.279 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:51.351 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:51.874 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:51.916 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:51.965 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:52.941 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:53.167 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:53.240 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:53.611 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:53.743 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:54.655 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:55.148 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:55.774 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for internalUser0
+21:49:55.796 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:55.796 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:55.796 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:55.796 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:55.798 [pool-12-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:49:55.810 [Test worker] DEBUG tourGuide.service.RewardsService - <<calculateRewards>> was called for jon
+21:49:56.214 [Test worker] DEBUG tourGuide.service.RewardsService - Reward was created for jon
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

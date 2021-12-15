@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestTourGuideService" tests="6" skipped="0" failures="0" errors="0" timestamp="2021-12-15T20:49:56" hostname="LAPTOP" time="0.308">
+  <properties/>
+  <testcase name="getUserLocation" classname="tourGuide.TestTourGuideService" time="0.094"/>
+  <testcase name="addUser" classname="tourGuide.TestTourGuideService" time="0.001"/>
+  <testcase name="getTripDeals" classname="tourGuide.TestTourGuideService" time="0.022"/>
+  <testcase name="getAllUsers" classname="tourGuide.TestTourGuideService" time="0.001"/>
+  <testcase name="trackUser" classname="tourGuide.TestTourGuideService" time="0.053"/>
+  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="0.136"/>
+  <system-out><![CDATA[21:49:56.237 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.237 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.237 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.237 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.237 [Test worker] DEBUG tourGuide.service.TourGuideService - <<trackUserLocation>> was called for jon
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.service.TourGuideService - STARTED tracking the users' locations.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.service.TourGuideService - FINISHED tracking the users' locations. Time Elapsed: 0 seconds.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.service.RewardsService - STARTED calculating rewards.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.service.RewardsService - FINISHED calculating rewards. Time Elapsed: 0 seconds.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:49:56.238 [pool-16-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:49:56.331 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.331 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.331 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.331 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.332 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:49:56.332 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.332 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.332 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.332 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.service.TourGuideService - STARTED tracking the users' locations.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.service.TourGuideService - FINISHED tracking the users' locations. Time Elapsed: 0 seconds.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.service.RewardsService - STARTED calculating rewards.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.service.RewardsService - FINISHED calculating rewards. Time Elapsed: 0 seconds.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:49:56.333 [pool-22-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:49:56.355 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.355 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.355 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.355 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.356 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+21:49:56.356 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.356 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.356 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.356 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.357 [Test worker] DEBUG tourGuide.service.TourGuideService - <<trackUserLocation>> was called for jon
+21:49:56.357 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:49:56.357 [pool-28-thread-1] DEBUG tourGuide.service.TourGuideService - STARTED tracking the users' locations.
+21:49:56.358 [pool-28-thread-1] DEBUG tourGuide.service.TourGuideService - FINISHED tracking the users' locations. Time Elapsed: 0 seconds.
+21:49:56.358 [pool-28-thread-1] DEBUG tourGuide.service.RewardsService - STARTED calculating rewards.
+21:49:56.358 [pool-28-thread-1] DEBUG tourGuide.service.RewardsService - FINISHED calculating rewards. Time Elapsed: 0 seconds.
+21:49:56.358 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:49:56.358 [pool-28-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+21:49:56.409 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+21:49:56.410 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+21:49:56.410 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+21:49:56.410 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+21:49:56.410 [Test worker] DEBUG tourGuide.service.TourGuideService - <<trackUserLocation>> was called for jon
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.service.TourGuideService - STARTED tracking the users' locations.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.service.TourGuideService - FINISHED tracking the users' locations. Time Elapsed: 0 seconds.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.service.RewardsService - STARTED calculating rewards.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.service.RewardsService - FINISHED calculating rewards. Time Elapsed: 0 seconds.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+21:49:56.410 [pool-31-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
